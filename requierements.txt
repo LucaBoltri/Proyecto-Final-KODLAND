@@ -1,0 +1,19 @@
+# Servidor
+Flask>=3.0,<4.0
+
+# ASR (Whisper acelerado)
+faster-whisper>=0.10.0
+ctranslate2>=4.3.1
+tokenizers>=0.15.0
+onnxruntime>=1.16.0
+numpy>=1.23
+
+# Traducción
+googletrans==4.0.0rc1
+
+# Texto a voz (TTS)
+gTTS>=2.5.1
+pyttsx3>=2.90
+
+# Utilidades
+requests>=2.31.0

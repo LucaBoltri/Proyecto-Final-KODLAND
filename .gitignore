@@ -1,0 +1,30 @@
+# Python / venv
+.venv/
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Entornos/IDE
+.vscode/
+.idea/
+
+# Archivos sensibles
+*.env
+.env
+
+# Datos grandes de la app
+data/temp/
+data/outputs/
+data/videos/
+data/audio/
+
+# Logs / caches
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# FastAPI/Flask instance (si existiera)
+instance/
