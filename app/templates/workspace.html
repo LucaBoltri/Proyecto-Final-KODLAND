@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>VideoConv — Workspace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="header">
+    <a class="btn secondary back" href="/upload">BACK TO HOME</a>
+    <div class="brand">
+      <img src="{{ url_for('static', filename='media/brand.svg') }}" alt="VideoConv" />
+      <h1>VideoConv</h1>
+    </div>
+    <p class="muted" style="margin-left:auto">Upload, analyze, and process your videos with VideoConv</p>
+  </div>
+
+  <div class="grid grid-2">
+    <!-- Izquierda: video + meta -->
+    <section class="card">
+      <div class="video-wrap">
+        {% if video_url %}
+          <video controls preload="metadata" playsinline>
+            <source src="{{ video_url }}" type="video/mp4" />
+          </video>
+        {% else %}
+          <div class="muted">Video no disponible todavía.</div>
+        {% endif %}
+      </div>
+
+      {% if filename or duration or size_human %}
+      <div class="meta" style="margin-top:12px">
+        {% if filename %}<span>🎬 {{ filename }}</span>{% endif %}
+        {% if duration %}<span>⏱ {{ duration }}</span>{% endif %}
+        {% if size_human %}<span>📦 {{ size_human }}</span>{% endif %}
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- Derecha: panel -->
+    <section class="panel">
+
+      <!-- Detección de idioma -->
+      <div class="segment">
+        <h3>Language Detection</h3>
+        <p class="muted">
+          Detected: <span class="badge ok">{{ (detected_lang or 'auto')|upper }}</span>
+        </p>
+
+        <details style="margin-top:8px">
+          <summary>Cambiar manualmente</summary>
+          <form action="/set_lang/{{ file_id }}" method="POST" style="margin-top:10px">
+            <select name="lang">
+              {% set ul = used_language or 'auto' %}
+              <option value="auto" {{ 'selected' if ul=='auto' else '' }}>Detectar automáticamente</option>
+              <option value="es"   {{ 'selected' if ul=='es' else '' }}>Español</option>
+              <option value="en"   {{ 'selected' if ul=='en' else '' }}>Inglés</option>
+              <option value="pt"   {{ 'selected' if ul=='pt' else '' }}>Portugués</option>
+              <option value="it"   {{ 'selected' if ul=='it' else '' }}>Italiano</option>
+              <option value="fr"   {{ 'selected' if ul=='fr' else '' }}>Francés</option>
+            </select>
+            <button class="btn" type="submit">Aplicar</button>
+          </form>
+        </details>
+      </div>
+
+      <!-- Tabs sin JS -->
+      <input type="radio" id="tab-sum" name="tab" checked>
+      <input type="radio" id="tab-sub" name="tab">
+
+      <div class="tabs">
+        <label for="tab-sum" class="active">🧾 Summary</label>
+        <label for="tab-sub">🗂 Subtitles</label>
+      </div>
+
+      <div class="content">
+        <!-- SUMMARY -->
+        <div class="segment tab-content summary">
+          <form action="/summary/{{ file_id }}" method="POST">
+            <label for="sum_lang" class="muted">Summary Language</label>
+            <select id="sum_lang" name="sum_lang">
+              {% set sl = summary_lang or 'es' %}
+              <option value="es" {{ 'selected' if sl=='es' else '' }}>Español</option>
+              <option value="en" {{ 'selected' if sl=='en' else '' }}>English</option>
+              <option value="pt" {{ 'selected' if sl=='pt' else '' }}>Português</option>
+              <option value="it" {{ 'selected' if sl=='it' else '' }}>Italiano</option>
+              <option value="fr" {{ 'selected' if sl=='fr' else '' }}>Français</option>
+            </select>
+            <button class="btn" type="submit" style="margin-left:10px">Generate Summary</button>
+          </form>
+
+          {% if summary %}
+            <p style="margin-top:14px">{{ summary }}</p>
+
+            {% if summary_audio_url %}
+              <audio controls preload="metadata" style="width:100%; margin-top:10px">
+                <source src="{{ summary_audio_url }}" type="audio/mpeg">
+              </audio>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <!-- SUBTITLES -->
+        <div class="segment tab-content subtitles">
+          <form action="/generate_tracks/{{ file_id }}" method="POST">
+            <fieldset class="inline">
+              <legend>Generar subtítulos:</legend>
+              {% set existing = existing_tracks or [] %}
+              {% for code,label in [('es','Español'),('en','English'),('pt','Português'),('it','Italiano'),('fr','Français')] %}
+                <label>
+                  <input type="checkbox" name="langs" value="{{ code }}"
+                         {% if code in existing %}disabled{% endif %}>
+                  {{ label }} {% if code in existing %}(ya generado){% endif %}
+                </label>
+              {% endfor %}
+            </fieldset>
+            <button class="btn" type="submit">Crear pistas</button>
+          </form>
+
+          {% if tracks %}
+            <div style="margin-top:12px">
+              <span class="muted">Pistas disponibles:</span>
+              {% for code, url in tracks.items() %}
+                <div>• {{ code|upper }} → <a class="download" href="{{ url }}" download>descargar VTT</a></div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Descargas -->
+      {% if srt_url or txt_url %}
+      <div class="segment">
+        <h3>Descargas</h3>
+        <p>
+          {% if srt_url %}⬇️ <a class="download" href="{{ srt_url }}" download>Descargar SRT</a>{% endif %}
+          {% if srt_url and txt_url %} &nbsp;|&nbsp; {% endif %}
+          {% if txt_url %}⬇️ <a class="download" href="{{ txt_url }}" download>Descargar Resumen (.txt)</a>{% endif %}
+        </p>
+      </div>
+      {% endif %}
+
+    </section>
+  </div>
+</div>
+
+</body>
+</html>

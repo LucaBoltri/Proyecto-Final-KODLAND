@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>VideoConv — Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .wrapper { max-width: 1100px; margin: 0 auto; padding: 32px }
+    .uploader {
+      border:2px dashed #e2d97c; border-radius: 24px; padding: 48px; text-align:center;
+      background: #3e3a37; color: #fff;
+    }
+    .uploader .hint { color: #bfb8b0; margin-top: 12px; font-size: 14px }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <a class="btn secondary" href="{{ url_for('home') }}">BACK TO HOME</a>
+
+    <header style="text-align:center; margin: 18px 0 28px">
+      <h1>VideoConv</h1>
+      <p class="muted">Upload, analyze, and process your videos with VideoConv</p>
+    </header>
+
+    <section class="uploader">
+      <form action="{{ url_for('upload_post') }}" method="POST" enctype="multipart/form-data">
+        <div style="font-size:18px; margin-bottom:16px">Arrastrá tu video aquí</div>
+        <input type="file" name="file" accept="video/*" required />
+        <div class="hint">Formats: MP4, MOV, AVI, MKV • Max size: 500MB (tu elección)</div>
+        <div style="margin-top:18px">
+          <button class="btn" type="submit">Choose Video</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</body>
+</html>
