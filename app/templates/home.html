@@ -2,42 +2,59 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>VideoConv — Home</title>
+  <title>Lúmina — Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    /* Estilos mínimos para el hero; usa tu style.css como base */
-    .hero {
-      display:grid; grid-template-columns: 1.1fr 1fr; gap:32px;
-      min-height: 100vh; align-items:center; padding:48px; box-sizing: border-box;
-    }
-    .hero .copy { max-width: 560px }
-    .hero .title { font-size: clamp(42px,7vw,72px); line-height:1.05; margin:0 0 .25em }
-    .hero .lead { color: var(--muted, #999); margin: 0 0 1.25em }
-    .hero video, .hero img { width:100%; height:auto; border-radius: 12px; display:block }
-  </style>
 </head>
-<body>
-  <div class="hero">
-    <div class="copy">
-      <h1 class="title">VideoConv</h1>
-      <p class="lead">Upload, analyze, and process your videos with VideoConv.</p>
-      <p>
-        Cargá un video, obtené <strong>subtítulos</strong> en múltiples idiomas,
-        <strong>resúmenes</strong> en texto y <strong>voz</strong> natural.
-      </p>
-      <p style="margin-top:24px">
-        <a class="btn" href="{{ url_for('upload_get') }}">INGRESAR</a>
-      </p>
-    </div>
-    <div>
-      <!-- Si tenés un video en loop ponelo en static/media/hero-loop.mp4 -->
-      {% if false %}
-      <video src="{{ url_for('static', filename='media/hero-loop.mp4') }}" autoplay muted loop playsinline></video>
-      {% else %}
-      <img src="{{ url_for('static', filename='media/hero-placeholder.jpg') }}" alt="Hero" />
-      {% endif %}
-    </div>
+<body class="theme">
+
+  <div class="home">
+
+    <!-- Columna izquierda (texto centrado) -->
+    <section class="home-left">
+      <div class="home-left-inner">
+        <h1 class="home-title">Lúmina</h1>
+        <p class="home-sub">Escuchá y entendé tus videos como nunca antes.</p>
+
+        <picture>
+        <!-- Si lo tenés en /static/media/icons/... -->
+        <source
+          srcset="{{ url_for('static', filename='media/icons/icon-esfera-fuego.png') }}?v=2"
+          type="image/png"
+        />
+        <!-- Fallback a /static/media/... -->
+        <img
+          class="spark-icon"
+          src="{{ url_for('static', filename='media/icon-esfera-fuego.png') }}?v=2"
+          alt="Lúmina logo"
+          width="64" height="64"
+          loading="eager"
+        />
+      </picture>
+
+
+        <p class="home-copy">
+          Con <strong>Lúmina</strong> podés subir cualquier video,
+          <strong>obtener un resumen automático en el idioma que elijas</strong>,
+          activar o desactivar <strong>subtítulos personalizados</strong>
+          y descargar todo el contenido en <strong>texto</strong> o <strong>PDF</strong>.
+          Entendé tus videos de forma más rápida, clara y en tu propio idioma.
+        </p>
+
+        <a class="btn primary" href="{{ url_for('upload') }}">INGRESAR ▸</a>
+      </div>
+    </section>
+
+    <!-- Columna derecha (hero fullscreen fijo) -->
+    <aside class="home-right-fixed">
+      <video
+        class="home-hero"
+        src="{{ url_for('static', filename='media/hero.mp4') }}"
+        autoplay muted loop playsinline
+      ></video>
+    </aside>
+
   </div>
+
 </body>
 </html>

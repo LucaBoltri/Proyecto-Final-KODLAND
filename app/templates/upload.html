@@ -2,37 +2,92 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>VideoConv — Upload</title>
+  <title>Lúmina — Subir video</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    .wrapper { max-width: 1100px; margin: 0 auto; padding: 32px }
-    .uploader {
-      border:2px dashed #e2d97c; border-radius: 24px; padding: 48px; text-align:center;
-      background: #3e3a37; color: #fff;
-    }
-    .uploader .hint { color: #bfb8b0; margin-top: 12px; font-size: 14px }
-  </style>
 </head>
-<body>
-  <div class="wrapper">
-    <a class="btn secondary" href="{{ url_for('home') }}">BACK TO HOME</a>
+<body class="theme upload-page">
 
-    <header style="text-align:center; margin: 18px 0 28px">
-      <h1>VideoConv</h1>
-      <p class="muted">Upload, analyze, and process your videos with VideoConv</p>
-    </header>
+  <!-- Header -->
+  <header class="topbar">
+    <a class="btn ghost back" href="{{ url_for('home') }}">‹ HOME</a>
+  <!-- Título + subtítulo -->
+  <section class="upload-hero">
+    <h1 class="upload-title">Lúmina</h1>
+    <p class="upload-subtitle">Escuchá y entendé tus videos como nunca antes.</p>
+  </section>
 
-    <section class="uploader">
-      <form action="{{ url_for('upload_post') }}" method="POST" enctype="multipart/form-data">
-        <div style="font-size:18px; margin-bottom:16px">Arrastrá tu video aquí</div>
-        <input type="file" name="file" accept="video/*" required />
-        <div class="hint">Formats: MP4, MOV, AVI, MKV • Max size: 500MB (tu elección)</div>
-        <div style="margin-top:18px">
-          <button class="btn" type="submit">Choose Video</button>
-        </div>
-      </form>
-    </section>
+  <!-- Esfera con glow (igual al Home), centrada entre el título y la tarjeta -->
+  <div class="upload-spark">
+    <img
+      class="spark-icon"
+      src="{{ url_for('static', filename='media/icons/icon-esfera-fuego.png') }}"
+      alt=""
+      loading="lazy"
+    />
   </div>
+
+  <!-- Tarjeta centrada -->
+  <main class="upload-wrap">
+    <section class="upload-card dropzone">
+      <h2>Arrastra y suelta tu video aquí</h2>
+      <p class="muted">O haz clic para explorar y seleccionar un archivo</p>
+
+      <form id="uploadForm" action="{{ url_for('do_upload') }}" method="POST" enctype="multipart/form-data">
+        <!-- input real oculto -->
+        <input id="fileInput" class="hidden-input" type="file" name="file" accept="video/*" required>
+
+        <div class="actions-row">
+          <button type="button" class="btn primary pill" id="btnChoose">
+            ELEGIR VIDEO
+            <span class="icon video" aria-hidden="true"></span>
+          </button>
+
+          <!-- Select pastilla: idioma inicial del resumen -->
+          <label class="select-wrap">
+            <span class="select-label">IDIOMA DEL RESUMEN INICIAL</span>
+            <select name="sum_lang" class="select lang-select" aria-label="Idioma del resumen inicial">
+              <option value="es" selected>Español</option>
+              <option value="en">Inglés</option>
+              <option value="it">Italiano</option>
+              <option value="fr">Francés</option>
+              <option value="pt">Portugués</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn primary pill">CONTINUAR</button>
+        </div>
+
+        {% if error %}
+          <p class="error">{{ error }}</p>
+        {% endif %}
+      </form>
+
+      <p class="muted small footnote">
+        Formatos soportados: MP4, MOV, AVI, MKV • Tamaño máximo: 500 MB
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Click en "Elegir video" -> abrir selector nativo
+    const btnChoose = document.getElementById('btnChoose');
+    const fileInput = document.getElementById('fileInput');
+    btnChoose.addEventListener('click', () => fileInput.click());
+
+    // Arrastrar y soltar sobre la tarjeta
+    const dz = document.querySelector('.dropzone');
+    ['dragenter','dragover'].forEach(ev =>
+      dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('is-drag'); })
+    );
+    ['dragleave','drop'].forEach(ev =>
+      dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('is-drag'); })
+    );
+    dz.addEventListener('drop', e => {
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        fileInput.files = e.dataTransfer.files;
+      }
+    });
+  </script>
 </body>
 </html>
