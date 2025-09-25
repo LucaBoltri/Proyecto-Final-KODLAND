@@ -189,6 +189,11 @@ def workspace(file_id: str):
 
     size_human = _fmt_size((VIDEOS_DIR / video_name).stat().st_size) if video_name else None
 
+    # Check for pending summary generation
+    from flask import request
+    pending = request.args.get("pending")
+    summary = st.get("summary")
+    summary_pending = bool(pending) and not summary
     return render_template(
         "workspace.html",
         file_id=file_id,
@@ -198,13 +203,14 @@ def workspace(file_id: str):
         video_url=video_url,
         detected_lang=st.get("detected_lang") or "auto",
         used_language=st.get("used_language") or "auto",
-        summary=st.get("summary"),
+        summary=summary,
         summary_lang=st.get("summary_lang") or "es",
         summary_audio_url=summary_audio_url,
         srt_url=srt_url,
         txt_url=txt_url,
         existing_tracks=existing_tracks,
         tracks=tracks_urls,     # << urls para inyectar <track>
+        summary_pending=summary_pending,
     )
 
 
@@ -254,7 +260,8 @@ def summary(file_id: str):
     st["summary_txt"] = txt_name
 
     save_state(file_id, st)
-    return redirect(url_for("workspace", file_id=file_id))
+    # Redirect to workspace with pending=1 to show progress bar
+    return redirect(url_for("workspace", file_id=file_id, pending=1))
 
 
 @app.post("/generate_tracks/<file_id>")

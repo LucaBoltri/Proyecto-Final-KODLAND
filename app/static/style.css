@@ -1,3 +1,139 @@
+@keyframes chargebar {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes chargebar {
+  from { width: 0; }
+  to { width: 100%; }
+}
+/* Make select visually match the action button in summary section */
+.segment .select-strong {
+  height: 48px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0 28px;
+  background: #ffd24b;
+  color: #222;
+  border: 2px solid #e6c14a;
+  box-shadow: none;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.segment .select-strong:focus {
+  outline: 2px solid #ffe36f;
+  border-color: #ffe36f;
+}
+/* === Workspace: Custom tab row for wide buttons with icons === */
+.ws-right .tab-btn-row {
+  display: flex;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 0 !important;
+  gap: 0;
+  border: none;
+}
+
+/* Remove top margin and padding from the first .segment after the tabs */
+.ws-right .panes .pane .segment:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Remove top margin from the first .segment after the tabs */
+.ws-right .tabs + .panes .pane .segment:first-child {
+  margin-top: 0 !important;
+}
+.ws-right .tab-btn {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 1.1rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  background: #eceaf3;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+}
+.ws-right .tab-btn:first-child {
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
+.ws-right .tab-btn:last-child {
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+.ws-right .tab-btn .tab-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 6px;
+}
+.ws-right .tab-btn:hover {
+  background: #e0dee7;
+}
+/* Selected/Unselected states for Resumir */
+
+/* Show/hide correct SVG icon for Resumir */
+#tab-summary:checked ~ .tab-btn-row .tab-btn-summary {
+  background: #111;
+  color: #fff;
+}
+#tab-summary:checked ~ .tab-btn-row .tab-btn-summary .resumen-on {
+  display: inline;
+}
+#tab-summary:checked ~ .tab-btn-row .tab-btn-summary .resumen-off {
+  display: none;
+}
+#tab-summary:not(:checked) ~ .tab-btn-row .tab-btn-summary .resumen-on {
+  display: none;
+}
+#tab-summary:not(:checked) ~ .tab-btn-row .tab-btn-summary .resumen-off {
+  display: inline;
+}
+
+/* Show/hide correct SVG icon for Subtitular */
+#tab-subs:checked ~ .tab-btn-row .tab-btn-subs {
+  background: #111;
+  color: #fff;
+}
+#tab-subs:checked ~ .tab-btn-row .tab-btn-subs .subtitular-on {
+  display: inline;
+}
+#tab-subs:checked ~ .tab-btn-row .tab-btn-subs .subtitular-off {
+  display: none;
+}
+#tab-subs:not(:checked) ~ .tab-btn-row .tab-btn-subs .subtitular-on {
+  display: none;
+}
+#tab-subs:not(:checked) ~ .tab-btn-row .tab-btn-subs .subtitular-off {
+  display: inline;
+}
+/* Title row with lines for upload page */
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 0.2em;
+}
+.title-line {
+  display: inline-block;
+  height: 1px;
+  width: 60px;
+  background: #bcb7b2;
+  opacity: 0.6;
+}
 /* =========================================================
    LÚMINA — CSS LIGERO (HOME + UPLOAD + WORKSPACE)
    ========================================================= */
@@ -18,7 +154,7 @@ html,body{ margin:0; height:100%; }
 body.theme{
   background:var(--bg);
   color:var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: 'Montserrat', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 .muted{ color:var(--muted); }
 
@@ -28,6 +164,14 @@ body.theme{
   gap:.5rem; padding:.85rem 1.25rem; border-radius:999px;
   border:none; cursor:pointer; text-decoration:none; font-weight:700;
   transition: transform .06s ease, background .2s ease, opacity .2s ease;
+}
+
+/* Make the main action button in the summary section full width */
+.segment form .btn[type="submit"] {
+  display: block;
+  width: 100%;
+  margin: 18px 0 0 0;
+  font-size: 1.1rem;
 }
 .btn:hover{ transform: translateY(-1px); }
 .btn:disabled{ opacity:.55; cursor:not-allowed; }
@@ -67,8 +211,12 @@ body.home{ overflow:hidden; }
 .home-left-inner{ max-width:560px; }
 
 .home-title{
-  margin:0 0 8px; font-weight:800; letter-spacing:.5px;
-  font-size:clamp(40px, 6vw, 72px); line-height:1.05;
+  margin:0 0 8px;
+  font-family: 'Playfair Display', serif;
+  font-weight:700;
+  letter-spacing:.02em;
+  font-size:clamp(40px, 6vw, 72px);
+  line-height:1.05;
 }
 .home-sub{
   margin:0 0 22px; font-size:clamp(16px, 2vw, 22px); opacity:.95;
@@ -96,7 +244,13 @@ body.home{ overflow:hidden; }
   position:fixed; top:0; right:0; width:50vw; height:100vh; z-index:0;
 }
 .home-hero{
-  width:100%; height:100%; object-fit:cover; display:block; border-radius:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:bottom right;
+  display:block;
+  border-radius:0;
+  background:transparent;
 }
 
 /* =========================================================
@@ -130,22 +284,52 @@ body.home{ overflow:hidden; }
   border-radius:3px;
 }
 
-/* Select pastilla (igual a botones) */
-.select-wrap{ position:relative; display:inline-flex; align-items:center; }
-.select-wrap select{
-  appearance:none; -webkit-appearance:none; -moz-appearance:none;
-  border:none; outline:none; background:#ffd84d; color:#111;
-  font-weight:700; font-size:15px;
-  padding:10px 40px 10px 16px; border-radius:999px; cursor:pointer;
-  height:44px; line-height:1.2; min-width:140px; text-align:center;
+/* Select pastilla (igual a botones, gray by default) */
+.select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
-.select-wrap::after{
-  content:"▼"; position:absolute; right:16px; font-size:12px; color:#111; pointer-events:none;
+.select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  outline: none;
+  background: #ffd84b;
+  color: #111;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 40px 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 44px;
+  line-height: 1.2;
+  min-width: 180px;
+  text-align: center;
+  box-shadow: none;
+  transition: background 0.2s, border 0.2s;
 }
-.select-wrap select option{
-  background:#ffd84d; color:#111; padding:10px; font-size:14px;
+.select-wrap::after {
+  content: "▼";
+  position: absolute;
+  right: 16px;
+  font-size: 12px;
+  color: #111;
+  pointer-events: none;
 }
-.select-wrap select option:hover{ background:#e6be2e; color:#000; }
+.select-wrap select option {
+  background: #eceaf3;
+  color: #111;
+  padding: 10px;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.select-wrap select option:hover,
+.select-wrap select option:focus {
+  background: #ffd84b;
+  color: #000;
+}
 
 /* =========================================================
    WORKSPACE (65% / 35%) + selects amarillos + tabs + summary
@@ -187,13 +371,48 @@ body.home{ overflow:hidden; }
 /* Tabs */
 .tabs{ display:block; }
 .tabs input[type="radio"]{ display:none; }
-.tabs .tab-btn{
-  display:inline-flex; align-items:center; gap:.5rem;
-  padding:.6rem 1rem; border-radius:12px; margin-right:.5rem;
-  background:#3a3330; color:#ddd; cursor:pointer; user-select:none;
-  transition: transform .06s ease, background .2s ease, color .2s ease;
+/* Custom tab buttons for workspace */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 18px;
 }
-.tabs .tab-btn:hover{ transform:translateY(-1px); }
+.tabs .tab-btn {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 1.1rem 0;
+  border-radius: 18px 18px 0 0;
+  margin: 0;
+  background: #eceaf3;
+  color: #222;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: none;
+}
+.tabs .tab-btn .tab-icon {
+  width: 26px;
+  height: 26px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.tabs .tab-btn:hover {
+  background: #e0dee7;
+}
+#tab-summary:checked + label {
+  background: #111;
+  color: #fff;
+}
+#tab-subs:checked + label {
+  background: #111;
+  color: #fff;
+}
 .tabs .panes{ margin-top:12px; }
 .pane{ display:none; }
 
@@ -278,12 +497,12 @@ body.home{ overflow:hidden; }
 }
 
 /* Contenedor de los tres botones */
-.actions-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;               /* espacio entre ellos */
-  align-items: flex-end;   /* alinea todos abajo */
-  justify-content: center; /* centrados */
+/* Removed duplicate .actions-row and .select-wrap blocks to fix CSS errors */
+/* Make select same size as buttons */
+.select-wrap select {
+  min-width: 160px;
+  height: 44px;
+  padding: 10px 40px 10px 16px;
 }
 
 /* Ajuste para el bloque del select */
@@ -298,24 +517,7 @@ body.home{ overflow:hidden; }
   font-size: 14px;
   font-weight: 600;
   color: #e8d26a;
-  text-align: center;
-}
-
-.select-wrap select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  outline: none;
-  background: #ffd84d;   /* amarillo */
-  color: #111;           /* texto negro */
-  font-weight: 700;
-  font-size: 16px;
-  padding: 12px 50px 12px 20px;
-  border-radius: 999px;
-  cursor: pointer;
-  min-width: 180px;
-  height: 48px;
+/* Removed duplicate .select-wrap blocks to fix CSS errors */
   text-align: center;
   position: relative;
 }
@@ -350,9 +552,25 @@ body.home{ overflow:hidden; }
 
 .upload-title {
   font-size: clamp(40px, 6vw, 64px);
-  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
   margin: 0 0 12px;
   color: var(--ink);
+}
+/* Upload icon above dropzone */
+.upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+/* Home button fixed top left */
+.btn.ghost.back {
+  position: fixed;
+  top: 32px;
+  left: 40px;
+  z-index: 100;
+  box-shadow: 0 2px 8px #00000018;
 }
 
 .upload-subtitle {
@@ -400,6 +618,70 @@ body.home{ overflow:hidden; }
   0%   { transform: translateY(4px) scale(.92); opacity: 0; }
   60%  { transform: translateY(0)   scale(1.04); opacity: 1; }
   100% { transform: translateY(0)   scale(1); }
+}
+
+/* === Workspace: Tabs arriba en una fila (sin tocar SVGs) === */
+.ws-right .tabs{
+  position: static !important;     /* fuera de cualquier posicionamiento raro */
+  transform: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px 0 !important;   /* justo encima de "Idioma del Resumen" */
+  padding: 0 !important;
+  width: 100%;
+  height: auto !important;
+  flex-wrap: wrap;                 /* si no entra, pasa a dos líneas */
+}
+
+.ws-right .tabs input[type="radio"]{ display:none; }
+
+/* Botón de pestaña compacto, manteniendo el SVG/IMG que ya tenés */
+.ws-right .tabs > label.tab-btn{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 160px;
+  border-radius: 12px !important;
+  margin: 0 !important;
+  background: #3a3330 !important;
+  color: #ddd !important;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+/* Tamaño del icono (svg/img) conservado */
+.ws-right .tabs > label.tab-btn svg,
+.ws-right .tabs > label.tab-btn img{
+  width: 18px; height: 18px;
+  flex: 0 0 auto;
+}
+
+/* Hover/activos sin romper tus SVGs */
+.ws-right .tabs > label.tab-btn:hover{ background:#4a423e !important; }
+
+#tab-summary:checked + label.tab-btn{
+  background:#111 !important; color:#fff !important;
+}
+#tab-summary:checked + label.tab-btn + input + label.tab-btn{
+  background:#3a3330 !important; color:#ddd !important;
+}
+#tab-subs:checked + label.tab-btn{
+  background:#111 !important; color:#fff !important;
+}
+
+/* Que el contenedor de panes quede debajo con separación */
+.ws-right .tabs .panes{ width:100%; margin-top:0 !important; }
+/* Force no margin/padding between tab row and first segment */
+.ws-right .panes .pane .segment:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 

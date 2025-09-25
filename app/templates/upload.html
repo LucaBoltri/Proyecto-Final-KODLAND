@@ -5,16 +5,26 @@
   <title>Lúmina — Subir video</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Google Fonts: Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="theme upload-page">
 
   <!-- Header -->
   <header class="topbar">
-    <a class="btn ghost back" href="{{ url_for('home') }}">‹ HOME</a>
-  <!-- Título + subtítulo -->
+    <a class="btn ghost back" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='media/icons/icon-button-home.svg') }}" alt="Home" style="width:1.3em; height:1.3em; margin-right:8px; vertical-align:middle;" />
+      <span style="font-size:1.18em; font-weight:700; vertical-align:-0.08em; position:relative; top:-1px; color:#fff;">HOME</span>
+    </a>
+  </header>
+  <!-- Título + subtítulo con líneas decorativas -->
   <section class="upload-hero">
-    <h1 class="upload-title">Lúmina</h1>
-    <p class="upload-subtitle">Escuchá y entendé tus videos como nunca antes.</p>
+    <div class="title-row">
+      <span class="title-line"></span>
+      <h1 class="upload-title">Lúmina</h1>
+      <span class="title-line"></span>
+    </div>
+    <div class="upload-subtitle">Escuchá y entendé tus videos como nunca antes.</div>
   </section>
 
   <!-- Esfera con glow (igual al Home), centrada entre el título y la tarjeta -->
@@ -30,6 +40,9 @@
   <!-- Tarjeta centrada -->
   <main class="upload-wrap">
     <section class="upload-card dropzone">
+      <div class="upload-icon">
+        <img src="{{ url_for('static', filename='media/icons/icon-button-descragar.svg') }}" alt="Subir" width="56" height="56" />
+      </div>
       <h2>Arrastra y suelta tu video aquí</h2>
       <p class="muted">O haz clic para explorar y seleccionar un archivo</p>
 
@@ -43,11 +56,11 @@
             <span class="icon video" aria-hidden="true"></span>
           </button>
 
-          <!-- Select pastilla: idioma inicial del resumen -->
-          <label class="select-wrap">
-            <span class="select-label">IDIOMA DEL RESUMEN INICIAL</span>
+          <!-- Custom select: idioma inicial del resumen -->
+          <label class="select-wrap select-gray">
             <select name="sum_lang" class="select lang-select" aria-label="Idioma del resumen inicial">
-              <option value="es" selected>Español</option>
+              <option value="" selected disabled hidden>Idioma del resumen inicial</option>
+              <option value="es">Español</option>
               <option value="en">Inglés</option>
               <option value="it">Italiano</option>
               <option value="fr">Francés</option>

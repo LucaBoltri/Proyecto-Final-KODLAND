@@ -12,12 +12,19 @@
 
   <!-- Header -->
   <div class="header topbar">
-    <a class="btn ghost back" href="{{ url_for('upload') }}">‹ HOME</a>
+    <a class="btn ghost back" href="{{ url_for('upload') }}">
+      <img src="{{ url_for('static', filename='media/icons/icon-button-home.svg') }}" alt="Home" style="width:1.3em; height:1.3em; margin-right:8px; vertical-align:middle;" />
+      <span style="font-size:1.18em; font-weight:700; vertical-align:-0.08em; position:relative; top:-1px; color:#fff;">HOME</span>
+    </a>
 
   <!-- ====== HERO (igual que en Upload) ====== -->
   <section class="upload-hero">
-    <h1 class="upload-title">Lúmina</h1>
-    <p class="upload-subtitle">Escuchá y entendé tus videos como nunca antes.</p>
+    <div class="title-row">
+      <span class="title-line"></span>
+      <h1 class="upload-title">Lúmina</h1>
+      <span class="title-line"></span>
+    </div>
+    <div class="upload-subtitle">Escuchá y entendé tus videos como nunca antes.</div>
   </section>
 
   <!-- Esfera con glow (mismo efecto) -->
@@ -71,11 +78,19 @@
       <!-- Radios invisibles que controlan las pestañas -->
       <div class="tabs">
         <input type="radio" id="tab-summary" name="pane" checked>
-        <label class="tab-btn" for="tab-summary">🧾 Resumir</label>
-
         <input type="radio" id="tab-subs" name="pane">
-        <label class="tab-btn" for="tab-subs">🗂 Subtitular</label>
-
+        <div class="tab-btn-row">
+          <label class="tab-btn tab-btn-summary" for="tab-summary">
+            <img class="tab-icon resumen-icon resumen-on" src="{{ url_for('static', filename='media/icons/icon-button-resumir-on.svg') }}" alt="Resumir seleccionado" />
+            <img class="tab-icon resumen-icon resumen-off" src="{{ url_for('static', filename='media/icons/icon-button-resumir-off.svg') }}" alt="Resumir" />
+            <span>Resumir</span>
+          </label>
+          <label class="tab-btn tab-btn-subs" for="tab-subs">
+            <img class="tab-icon subtitular-icon subtitular-on" src="{{ url_for('static', filename='media/icons/icon-button-subtitular-on.svg') }}" alt="Subtitular seleccionado" />
+            <img class="tab-icon subtitular-icon subtitular-off" src="{{ url_for('static', filename='media/icons/icon-button-subtitular-off.svg') }}" alt="Subtitular" />
+            <span>Subtitular</span>
+          </label>
+        </div>
         <!-- Contenido de las pestañas -->
         <div class="panes">
 
@@ -84,18 +99,27 @@
             <div class="segment">
               <h3>Idioma del Resumen</h3>
               <form action="{{ url_for('summary', file_id=file_id) }}" method="POST" class="row gap">
-                <select id="sum_lang" name="sum_lang" class="select-strong">
-                  {% set sl = summary_lang or 'es' %}
-                  <option value="es" {{ 'selected' if sl=='es' else '' }}>Español</option>
-                  <option value="en" {{ 'selected' if sl=='en' else '' }}>English</option>
-                  <option value="pt" {{ 'selected' if sl=='pt' else '' }}>Português</option>
-                  <option value="it" {{ 'selected' if sl=='it' else '' }}>Italiano</option>
-                  <option value="fr" {{ 'selected' if sl=='fr' else '' }}>Français</option>
-                </select>
-
-                <button class="btn primary" type="submit" id="btn-gen-summary">
-                  GENERAR RESUMEN ▸
-                </button>
+                {% if summary_pending %}
+                <div style="width:100%;margin-bottom:8px;">
+                  <div style="background:#f2e9d6;border-radius:999px;height:10px;width:100%;overflow:hidden;">
+                    <div style="height:100%;width:100%;background:#ff5e8a;border-radius:999px;animation:chargebar 3s linear forwards;"></div>
+                  </div>
+                </div>
+                {% endif %}
+                <div style="display:flex; gap:16px; align-items:stretch; width:100%;">
+                  <select id="sum_lang" name="sum_lang" class="select-strong" style="flex:1; min-width:120px; height:48px;">
+                    {% set sl = summary_lang or 'es' %}
+                    <option value="es" {{ 'selected' if sl=='es' else '' }}>Español</option>
+                    <option value="en" {{ 'selected' if sl=='en' else '' }}>English</option>
+                    <option value="pt" {{ 'selected' if sl=='pt' else '' }}>Português</option>
+                    <option value="it" {{ 'selected' if sl=='it' else '' }}>Italiano</option>
+                    <option value="fr" {{ 'selected' if sl=='fr' else '' }}>Français</option>
+                  </select>
+                  <button class="btn primary" type="submit" id="btn-gen-summary" style="flex:1; min-width:160px; height:48px; font-weight:700; margin-top:0; align-self:center;">
+                    GENERAR RESUMEN
+                    <img src="{{ url_for('static', filename='media/icons/icon-button-generar-resumen.svg') }}" alt="Generar" style="width:1.15em; height:1.15em; margin-left:10px; vertical-align:-0.2em; filter:brightness(0.8);" />
+                  </button>
+                </div>
               </form>
             </div>
 
