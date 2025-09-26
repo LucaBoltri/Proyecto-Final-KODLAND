@@ -33,5 +33,57 @@ source venv/bin/activate  # en Linux/Mac
 # Instalar dependencias
 pip install -r requirements.txt
 
+
 # Ejecutar el servidor
 python app/server.py
+
+## Dependencias principales
+
+El archivo `requierements.txt` incluye:
+
+```
+# Servidor
+Flask>=3.0,<4.0
+
+# ASR (Whisper acelerado)
+faster-whisper>=0.10.0
+ctranslate2>=4.3.1
+tokenizers>=0.15.0
+onnxruntime>=1.16.0
+numpy>=1.23
+
+# Traducción
+googletrans==4.0.0rc1
+
+# Texto a voz (TTS)
+gTTS>=2.5.1
+pyttsx3>=2.90
+
+# Utilidades
+requests>=2.31.0
+```
+
+## Estructura del proyecto
+
+- `app/server.py`: Servidor Flask y rutas principales
+- `app/pipeline.py`: Lógica de procesamiento (audio, transcripción, resumen, TTS, traducción)
+- `app/templates/`: Plantillas HTML (Jinja2)
+- `app/static/`: CSS y archivos estáticos
+- `data/`: Videos, audios, subtítulos, resúmenes y archivos temporales
+
+## Uso
+
+1. Abre la app en tu navegador (`http://localhost:5000`).
+2. Sube un video.
+3. Elige idioma y genera resumen o subtítulos.
+4. Descarga los resultados.
+
+## Notas
+
+- Todos los archivos generados se guardan en la carpeta `data/`.
+- Los subtítulos se exportan en `.srt` y `.vtt`.
+- Los resúmenes pueden descargarse en `.txt` y `.mp3`.
+- El frontend es minimalista, la lógica está en Python.
+
+---
+Proyecto realizado para Kodland. Uso educativo.
