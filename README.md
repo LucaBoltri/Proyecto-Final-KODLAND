@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 
 # Ejecutar el servidor
-python app/server.py
+python -m app.server
 
 ## Dependencias principales
 
